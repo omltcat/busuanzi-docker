@@ -1,0 +1,27 @@
+version: "3"
+services:
+  bsz_redis:
+    image: redis:6.0-alpine
+    container_name: bsz-redis
+    # ports:
+    #   - 6379:6379
+    volumes:
+      - "/path/to/busuanzi/data:/data"  # For persistent Redis data
+    environment:
+      TZ: Asia/Hong_Kong
+    restart: always
+
+  bsz-server:
+    image: omltcat/busuanzi
+    container_name: bsz-server
+    # ports:
+    #   - 8080:8080
+    environment:
+      TZ: Asia/Hong_Kong
+      PROD_HOSTS: 'www.your-domain.com,blog.your-domain.com' # Production hosts, or set to 'public' for any host
+      TEST_HOSTS: 'localhost:1313,localhost:4000' # Testing hosts, eg: hugo (1313) and hexo (4000). Returns random stats to help with page formatting instead of accessing/altering database
+      GET_BEFORE: true  # Get previous stats from official busuanzi if available
+      REDIS_HOST: bsz_redis
+      REDIS_PORT: 6379
+      REDIS_DB: 0
+    restart: always
