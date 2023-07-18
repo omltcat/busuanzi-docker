@@ -20,9 +20,12 @@ app = FastAPI(docs_url=None, redoc_url=None)
 @app.get("/busuanzi")
 def root(request: Request,
          referer: str = Header(None),
-         jsonpCallback: str = ""
+         jsonpCallback: str = "",
+         ref: str = ""
          ):
-    if not referer:
+    if ref != "":
+        referer = ref
+    elif not referer:
         return Response(content="Powered by: FastAPI + Redis", media_type="text/plain")
     client_host = request.client.host
     url_res = urlparse(referer)

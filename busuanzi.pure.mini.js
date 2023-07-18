@@ -54,7 +54,7 @@ bszCaller = {
   }
 },
 // CHANGE THIS URL TO YOURS!!!
-bszCaller.fetch("https://www.your-domain.com/busuanzi?jsonpCallback=BusuanziCallback", 
+bszCaller.fetch("https://www.your-domain.com/busuanzi?jsonpCallback=BusuanziCallback&ref=" + window.location.href,
 function(a) {
   bszTag.texts(a),
   bszTag.shows()
